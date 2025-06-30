@@ -104,7 +104,7 @@ resource "azurerm_network_security_group" "nsg4" {
 }
 
 resource "azurerm_storage_account" "storage1" {
-  name                     = "storageaccount1"
+  name                     = "storageaccount124"
   resource_group_name      = "example-rg"
   location                 = "East US"
   account_tier             = "Standard"
