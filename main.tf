@@ -112,7 +112,7 @@ resource "azurerm_storage_account" "storage1" {
 }
 
 resource "azurerm_storage_account" "storage2" {
-  name                     = "storageaccount2"
+  name                     = "storageaccount21234"
   resource_group_name      = "example-rg"
   location                 = "East US"
   account_tier             = "Standard"
