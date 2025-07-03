@@ -22,8 +22,6 @@ jobs:
             -H "Content-Type: application/json" \
             -d '{"username": "venkatesh_msp", "password": "core@123"}')
 
-          echo "Full Auth Response: $response"
-
           token=$(echo "$response" | jq -r '.token.access_token')
 
           if [[ "$token" == "null" || -z "$token" ]]; then
