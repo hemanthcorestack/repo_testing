@@ -3,7 +3,7 @@ name: Authenticated API Trigger
 on:
   push:
     branches:
-      - main  # or your desired branch
+      - main
 
   workflow_dispatch:
 
@@ -22,6 +22,8 @@ jobs:
             -H "Content-Type: application/json" \
             -d '{"username": "venkatesh_msp", "password": "core@123"}')
 
+          echo "Raw auth response: $response"
+          
           token=$(echo "$response" | jq -r '.token.access_token')
           echo "Token: $token"
 
@@ -31,3 +33,11 @@ jobs:
           fi
 
           echo "access_token=$token" >> $GITHUB_OUTPUT
+
+      - name: Call service_account API with X-Auth-Token
+        run: |
+          echo "Calling GET endpoint with token..."
+          resp=$(curl -X GET "https://api-qa.corestack.io/v2/service_account/item/683989df5676d463346c6415" \
+            -H "X-Auth-Token: ${{ steps.get_token.outputs.access_token }}" \
+            -H "Accept: application/json")
+          echo "Service Account response $resp"
