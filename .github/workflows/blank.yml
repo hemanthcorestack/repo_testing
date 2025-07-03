@@ -23,6 +23,7 @@ jobs:
             -d '{"username": "venkatesh_msp", "password": "core@123"}')
 
           token=$(echo "$response" | jq -r '.token.access_token')
+          echo "Token: $token"
 
           if [[ "$token" == "null" || -z "$token" ]]; then
             echo "Token not found in response!"
