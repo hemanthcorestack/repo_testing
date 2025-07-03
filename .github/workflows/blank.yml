@@ -1,0 +1,34 @@
+name: Authenticated API Trigger
+
+on:
+  push:
+    branches:
+      - main  # or your desired branch
+
+  workflow_dispatch:
+
+jobs:
+  call-api:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout (optional if not using repo code)
+        uses: actions/checkout@v3
+
+      - name: Get CoreStack Bearer Token
+        id: get_token
+        run: |
+          response=$(curl -s -X POST https://api-qa.corestack.io/v1/auth/tokens \
+            -H "Content-Type: application/json" \
+            -d '{"username": "venkatesh_msp", "password": "core@123"}')
+
+          echo "Full Auth Response: $response"
+
+          token=$(echo "$response" | jq -r '.token.access_token')
+
+          if [[ "$token" == "null" || -z "$token" ]]; then
+            echo "Token not found in response!"
+            exit 1
+          fi
+
+          echo "access_token=$token" >> $GITHUB_OUTPUT
