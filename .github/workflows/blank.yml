@@ -6,8 +6,6 @@ on:
       - main
 
   pull_request:
-    branches:
-      - main
 
   workflow_dispatch:
 
@@ -16,11 +14,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout (optional if not using repo code)
-        uses: actions/checkout@v3
-
       - name: Get CoreStack Bearer Token
-        id: get_token
+        id: raise_alert_for_corestack
         run: |
           response=$(curl -s -X POST https://api-qa.corestack.io/v1/auth/tokens \
             -H "Content-Type: application/json" \
@@ -35,13 +30,9 @@ jobs:
             echo "Token not found in response!"
             exit 1
           fi
-
-          echo "access_token=$token" >> $GITHUB_OUTPUT
-
-      - name: Call service_account API with X-Auth-Token
-        run: |
+          
           echo "Calling GET endpoint with token..."
           resp=$(curl -X GET "https://api-qa.corestack.io/v2/service_account/item/683989df5676d463346c6415" \
-            -H "X-Auth-Token: ${{ steps.get_token.outputs.access_token }}" \
+            -H "X-Auth-Token: ${{ $token }}" \
             -H "Accept: application/json")
           echo "Service Account response $resp"
