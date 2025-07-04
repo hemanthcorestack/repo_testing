@@ -115,7 +115,7 @@ resource "azurerm_storage_account" "storage2" {
   name                     = "storageaccount2"
   resource_group_name      = "example-rg"
   location                 = "East US"
-  account_tier             = "Premium"
+  account_tier             = "Premium_j4"
   account_replication_type = "GRS"
 }
 
