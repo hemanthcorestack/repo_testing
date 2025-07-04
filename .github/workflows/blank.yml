@@ -15,7 +15,7 @@ jobs:
         run: |
           response=$(curl -s -X POST https://api-qa.corestack.io/v1/auth/tokens \
             -H "Content-Type: application/json" \
-            -d '{"access_key": ${{ secrets.ACCESS_KEY }}, "secret_key": ${{ secrets.SECRET_KEY }}}')
+            -d '{"access_key": "${{ secrets.ACCESS_KEY }}", "secret_key": "${{ secrets.SECRET_KEY }}}"')
 
           echo "Raw auth response: $response"
           
