@@ -28,6 +28,6 @@ jobs:
           
           echo "Calling GET endpoint with token..."
           resp=$(curl -X GET "https://api-qa.corestack.io/v2/service_account/item/683989df5676d463346c6415" \
-            -H "X-Auth-Token: ${{ $token }}" \
+            -H "X-Auth-Token: $token " \
             -H "Accept: application/json")
           echo "Service Account response $resp"
